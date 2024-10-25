@@ -3,11 +3,11 @@
     "name": "NumberGuessGame",
     "slug": "NumberGuessGame",
     "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "orientation": "default",
+    "icon": "./assets/image.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/image.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
