@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket IO</title>
+</head>
+
+<body>
+
+
+    <h1>Chat App</h1>
+    <h3>Total Users : <b id="totalUsersText"></b> </h3>
+    <!-- <button onclick="sayHi()" >Say Hi to server</button> -->
+    <br>
+    <br>
+    <hr>
+    <div>
+        <div id="chatMessages"></div>
+        <input type="text" id="msgInput" placeholder="Type your message here...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+
+
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+        integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
+        crossorigin="anonymous"></script>
+    <script>
+        const socket = io("http://localhost:8080", { transports: ["websocket"] });
+
+        socket.on("connect", () => {
+            console.log("Connected to server");
+            const username = prompt("Enter your username:");
+            socket.emit("registerUser", username);
+        });
+
+
+        socket.on("error", () => {
+            console.log("Error connecting to server");
+        })
+
+
+
+
+
+        socket.on("userConnection", (count) => {
+            console.log(count);
+            document.getElementById("totalUsersText").innerText = count;
+        })
+
+
+        const chatMessagesContainer = document.getElementById("chatMessages");
+        const input = document.getElementById("msgInput")
+        function sendMessage() {
+            socket.emit("userMessage", input.value)
+            input.value = ""
+        }
+
+
+        socket.on("message", (user, msg) => {
+            let messageContainer = document.createElement("div");
+            messageContainer.innerText = `${user} : ${msg}`;
+            chatMessagesContainer.append(messageContainer)
+        })
+
+        socket.on("userLeft",(user) => {
+            alert(`${user} left the chat`);
+        })
+
+    </script>
+</body>
+
+</html>

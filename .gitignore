@@ -3,3 +3,5 @@
 /MealsApp/node_modules
 /ExpenseTrackerApp/node_modules
 /5-authapp/node_modules
+/SOCKET/ws/node_modules
+/SOCKET/socket IO/node_modules
